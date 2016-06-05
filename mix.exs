@@ -35,6 +35,7 @@ defmodule PitchforkApi.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+     {:inquisitor, "~> 0.1"},
      {:poison, "~> 2.0"}]
   end
 
