@@ -4,13 +4,12 @@ defmodule PitchforkApi.ArtistController do
   alias PitchforkApi.Artist
 
   def index(conn, _params) do
-    query = from a in Artist, preload: :albums
-    artists_with_albums = Repo.all(query)
-    render(conn, artists: artists_with_albums)
+    artists = Repo.all(Artist)
+    render(conn, artists: artists)
   end
 
   def show(conn, %{"id" => id}) do
-    artist = Artist |> Repo.get(id) |> Repo.preload(:albums)
+    artist = Repo.get(Artist, id)
     render conn, artist: artist
   end
 end

@@ -27,8 +27,7 @@ defmodule PitchforkApi.Artist do
     def encode(artist, _options) do
       %{
         name: artist.name,
-        id: artist.id,
-        albums: artist.albums.name
+        id: artist.id
       } |> Poison.Encoder.encode([])
     end
   end

@@ -25,11 +25,16 @@ defmodule PitchforkApi.Album do
 
   def build_query(query, params) do
     case params do
-      %{"rating" => _, "name" => _} ->
+      %{"rating" => _, "name" => _, "artist" => _} ->
         query
         |> get_albums
         |> by_rating(Map.get(params, "rating"))
         |> by_name(Map.get(params, "name"))
+        |> by_artist(Map.get(params, "artist"))
+      %{"artist" => _} ->
+        query
+        |> get_albums
+        |> by_artist(Map.get(params, "artist"))
       %{"rating" => _} ->
         query
         |> get_albums
@@ -57,6 +62,19 @@ defmodule PitchforkApi.Album do
   defp by_name(query, name) do
     from a in query,
     where: ilike(a.name, ^"#{name}%")
+  end
+
+  defp by_artist(query, artist) do
+    case Integer.parse(artist) do
+      {id, _} ->
+        from a in query,
+        join: ar in assoc(a, :artist),
+        where: a.artist_id == ^id
+      :error ->
+        from a in query,
+        join: ar in assoc(a, :artist),
+        where: ilike(ar.name, ^"#{artist}%")
+    end
   end
 
   defimpl Poison.Encoder, for: PitchforkApi.Album do
