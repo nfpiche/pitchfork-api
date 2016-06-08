@@ -10,12 +10,17 @@ defmodule PitchforkApi.ArtistController do
     artists =
       build_artist_query(params)
       |> Repo.all()
+      |> Repo.preload(:albums)
 
     render(conn, artists: artists)
   end
 
   def show(conn, %{"id" => id}) do
-    artist = Repo.get(Artist, id)
+    artist =
+      Artist
+      |> Repo.get(id)
+      |> Repo.preload(:albums)
+
     render conn, artist: artist
   end
 

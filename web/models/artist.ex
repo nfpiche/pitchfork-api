@@ -23,12 +23,22 @@ defmodule PitchforkApi.Artist do
     |> cast(params, @required_fields, @optional_fields)
   end
 
-  defimpl Poison.Encoder, for: PitchforkApi.Artist do
-    def encode(artist, _options) do
-      %{
-        name: artist.name,
-        id: artist.id
-      } |> Poison.Encoder.encode([])
-    end
+  def average_rating(artist) do
+    average({0, 0, artist.albums})
+    |> Float.round(2)
+  end
+
+  defp average({_, 0, []}) do
+    0.0
+  end
+
+  defp average({total, count, []}) do
+    total / count
+  end
+
+  defp average({total, count, [head | tail]}) do
+    total = total + head.rating
+    count = count + 1
+    average({total, count, tail})
   end
 end

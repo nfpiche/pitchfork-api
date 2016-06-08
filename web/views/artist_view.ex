@@ -10,6 +10,10 @@ defmodule PitchforkApi.ArtistView do
   end
 
   def render("artist.json", %{artist: artist}) do
-    artist
+    %{
+      id: artist.id,
+      name: artist.name,
+      average_album_rating: PitchforkApi.Artist.average_rating artist
+    }
   end
 end
