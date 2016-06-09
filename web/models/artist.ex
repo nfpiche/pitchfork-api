@@ -28,13 +28,9 @@ defmodule PitchforkApi.Artist do
     |> Float.round(2)
   end
 
-  defp average({_, 0, []}) do
-    0.0
-  end
+  defp average({_, 0, []}), do: 0.0
 
-  defp average({total, count, []}) do
-    total / count
-  end
+  defp average({total, count, []}), do: total / count
 
   defp average({total, count, [head | tail]}) do
     total = total + head.rating

@@ -12,7 +12,14 @@ defmodule PitchforkApi.ArtistController do
       |> Repo.all()
       |> Repo.preload(:albums)
 
-    {avg, _} = Float.parse(params["avg"])
+    {avg, _} =
+      case params["avg"] do
+        nil ->
+          {0.0, :nothing}
+        _ ->
+          Float.parse(params["avg"])
+      end
+
     render(conn, artists: artists, avg: avg)
   end
 
