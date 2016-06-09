@@ -12,4 +12,5 @@ config :pitchfork_api, PitchforkApi.Repo,
   username: System.get_env("DATABASE_USERNAME"),
   password: System.get_env("DATABASE_PASSWORD"),
   database: "pitchfork_api_prod",
-  pool_size: 20
+  pool_size: 20,
+  ssl: true
