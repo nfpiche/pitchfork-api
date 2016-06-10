@@ -1,19 +1,28 @@
-# PitchforkApi
-
-To start your Phoenix app:
-
-  1. Install dependencies with `mix deps.get`
-  2. Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  3. Start Phoenix endpoint with `mix phoenix.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+#PITCHFORK API                                                                                                                                          
+                                                                                                                                                       
+##All data taken from http://www.pitchfork.com 
+##API is live at https://shrouded-badlands-35511.herokuapp.com/api                                                                                                       
+                                                                                                                                                       
+#USAGE:                                                                                                                                                 
+                                                                                                                                                       
+## api/artists                                                                                                                                          
+* query arguments:                                                                                                                                    
+  * name: filter by artist name                                                                                                                        
+  * avg: filter by minimum artist average rating        
+  * example: api/artists?name=Pri&avg=8.5                                                                                               
+                                                                                                                                                       
+## api/artists/:id                                                                                                                                      
+* get artist by id      
+*  example: api/artists/1                                                                                                                              
+                                                                                                                                                       
+## api/albums                                                                                                                                           
+* query arguments:                                                                                                                                    
+  * name: filter by album name                                                                                                                         
+  * rating: filter by exact album rating                                                                                                               
+  * min\_rating: filter by minimum album rating                                                                                                         
+  * artist: filter by artist name 
+  * example: api/albums?min\_rating=8.5&artist=Pri                                                                                                              
+                                                                                                                                                       
+## api/albums/:id                                                                                                                                       
+* get album by id  
+*  example: api/albums/1
