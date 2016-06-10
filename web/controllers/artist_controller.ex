@@ -38,7 +38,7 @@ defmodule PitchforkApi.ArtistController do
     |> build_artist_query(tail)
   end
 
-  defp build_artist_query(query, [{"avg", _}|tail]) do
+  defp build_artist_query(_query, [{"avg", _}|tail]) do
     build_artist_query(tail)
   end
 end
