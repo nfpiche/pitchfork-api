@@ -3,7 +3,7 @@ defmodule PitchforkApi.ArtistController do
   alias PitchforkApi.Repo
   alias PitchforkApi.Artist
 
-  whitelist_params = ~w(name avg)
+  whitelist_params = ~w(name avg limit)
   use Inquisitor, with: PitchforkApi.Artist, whitelist: whitelist_params
 
   def index(conn, params) do
@@ -12,13 +12,7 @@ defmodule PitchforkApi.ArtistController do
       |> Repo.all()
       |> Repo.preload(:albums)
 
-    {avg, _} =
-      case params["avg"] do
-        nil ->
-          {0.0, :nothing}
-        _ ->
-          Float.parse(params["avg"])
-      end
+    avg = extract_avg params["avg"]
 
     render(conn, artists: artists, avg: avg)
   end
@@ -38,7 +32,24 @@ defmodule PitchforkApi.ArtistController do
     |> build_artist_query(tail)
   end
 
+  defp build_artist_query(query, [{"limit", limit}|tail]) do
+    query
+    |> Ecto.Query.limit(^limit)
+    |> build_artist_query(tail)
+  end
+
   defp build_artist_query(_query, [{"avg", _}|tail]) do
     build_artist_query(tail)
+  end
+
+  defp extract_avg(params_avg) do
+    {avg, _resp} =
+      case params_avg do
+        nil ->
+          {0.0, :nothing}
+        _ ->
+          Float.parse(params_avg)
+      end
+    avg
   end
 end

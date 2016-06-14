@@ -3,7 +3,7 @@ defmodule PitchforkApi.ArtistView do
   use PitchforkApi.Web, :view
 
   def render("index.json", %{artists: artists, avg: avg}) do
-    Enum.map(artists, &(Map.put_new(&1, :average, Artist.average_rating(&1))))
+    Enum.map(artists, &(Map.put_new(&1, :average, Artist.average_rating(&1.albums))))
     |> Enum.filter(&(&1.average >= avg))
     |> render_many(PitchforkApi.ArtistView, "artist.json")
   end

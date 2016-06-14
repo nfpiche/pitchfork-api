@@ -23,8 +23,8 @@ defmodule PitchforkApi.Artist do
     |> cast(params, @required_fields, @optional_fields)
   end
 
-  def average_rating(artist) do
-    average({0, 0, artist.albums})
+  def average_rating(albums) do
+    average({0, 0, albums})
     |> Float.round(2)
   end
 
